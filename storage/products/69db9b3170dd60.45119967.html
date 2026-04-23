@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Themora AI - Viral Content Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap');
+        
+        :root {
+            --primary: #9333ea;
+            --secondary: #6366f1;
+            --bg-dark: #05020a;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: #ffffff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .bg-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; overflow: hidden;
+        }
+
+        .ai-face-bg {
+            position: absolute;
+            top: 50%; right: -5%;
+            transform: translateY(-50%);
+            width: 70%; height: 90%;
+            background-image: url('https://images.unsplash.com/photo-1675557009875-436f09789f30?q=80&w=2070&auto=format&fit=crop');
+            background-size: contain; background-repeat: no-repeat; background-position: center right;
+            opacity: 0.15; filter: grayscale(100%) brightness(0.8);
+            mask-image: radial-gradient(circle at center, black 20%, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black 20%, transparent 80%);
+        }
+
+        .glow {
+            position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.2;
+        }
+        .glow-1 { top: -10%; left: -10%; width: 600px; height: 600px; background: radial-gradient(circle, var(--primary), transparent); }
+        .glow-2 { bottom: -10%; right: -5%; width: 500px; height: 500px; background: radial-gradient(circle, var(--secondary), transparent); }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #e9d5ff, #c084fc, #6366f1);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px;
+        }
+
+        .btn-cta {
+            background: linear-gradient(90deg, #9333ea, #6366f1);
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-cta:hover { transform: scale(1.05); box-shadow: 0 0 35px rgba(147, 51, 234, 0.6); }
+
+        .page { display: none; min-height: 100vh; }
+        .page.active { display: block; animation: fadeIn 0.5s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .loader-ring {
+            border: 4px solid rgba(147, 51, 234, 0.1);
+            border-top: 4px solid #9333ea;
+            border-radius: 50%;
+            width: 40px; height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <div class="bg-layer">
+        <div class="ai-face-bg"></div>
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-black/50 backdrop-blur-lg border-b border-white/5">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div onclick="showPage('home')" class="flex items-center space-x-3 cursor-pointer">
+                <div class="w-10 h-10 bg-gradient-to-tr from-purple-600 to-indigo-600 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-play text-white text-xs"></i>
+                </div>
+                <span class="text-2xl font-black tracking-tighter">Themora</span>
+            </div>
+            <div class="hidden md:flex space-x-10 text-[10px] font-black uppercase tracking-widest text-gray-400">
+                <a href="#" onclick="showPage('home')" class="hover:text-white transition">Home</a>
+                <a href="#features" class="hover:text-white transition">Features</a>
+                <a href="#pricing" class="hover:text-white transition">Pricing</a>
+                <a href="#testimonials" class="hover:text-white transition">Reviews</a>
+            </div>
+            <button onclick="showPage('studio')" class="btn-cta px-6 py-2.5 rounded-full text-sm font-bold">Generate Video</button>
+        </div>
+    </nav>
+
+    <!-- LANDING PAGE -->
+    <main id="homePage" class="page active">
+        <!-- Hero Section -->
+        <section class="container mx-auto px-6 pt-24 pb-32 text-center">
+            <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-[10px] font-black mb-8 tracking-[0.2em] uppercase">
+                <span>The Future of Creation</span>
+            </div>
+            <h1 class="text-6xl md:text-8xl font-black mb-8 leading-[1.05] tracking-tight">
+                Viral Content <br> <span class="gradient-text">In Seconds.</span>
+            </h1>
+            <p class="text-gray-400 text-xl md:text-2xl max-w-2xl mx-auto mb-12">
+                Turn your thoughts into high-retention shorts. No editing skills required. Just your imagination.
+            </p>
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-6">
+                <button onclick="showPage('studio')" class="btn-cta px-12 py-5 rounded-2xl font-black text-xl w-full md:w-auto">
+                    Get Started Free <i class="fas fa-magic ml-2"></i>
+                </button>
+                <div class="text-gray-500 font-bold text-sm">
+                    <i class="fas fa-check-circle text-purple-500 mr-2"></i> No Credit Card Required
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Cards -->
+        <section id="features" class="container mx-auto px-6 py-20">
+            <h2 class="text-4xl font-black text-center mb-16 uppercase tracking-tighter">Powering <span class="text-purple-500">The Next Gen</span> of Creators</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-card p-10 hover:bg-white/[0.04] transition duration-500">
+                    <div class="w-12 h-12 bg-purple-600/20 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-keyboard text-purple-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">AI Scripting</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Pyschology-backed scripts designed to keep viewers hooked from the first second.</p>
+                </div>
+                <div class="glass-card p-10 hover:bg-white/[0.04] transition duration-500">
+                    <div class="w-12 h-12 bg-blue-600/20 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-closed-captioning text-blue-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Magic Captions</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Dynamic, animated subtitles auto-generated to match every word of your video.</p>
+                </div>
+                <div class="glass-card p-10 hover:bg-white/[0.04] transition duration-500">
+                    <div class="w-12 h-12 bg-indigo-600/20 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-music text-indigo-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Music Sync</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">Cinematic background scores that automatically sync with the mood and pace.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Tables -->
+        <section id="pricing" class="container mx-auto px-6 py-24">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black mb-4">Transparent Pricing</h2>
+                <p class="text-gray-500">Choose a plan that fits your growth.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Free -->
+                <div class="glass-card p-8 border border-white/5 flex flex-col">
+                    <h3 class="text-xl font-bold mb-2">Free</h3>
+                    <div class="text-4xl font-black mb-6">$0 <span class="text-sm font-normal text-gray-500">/mo</span></div>
+                    <ul class="space-y-4 mb-8 text-sm text-gray-400 flex-grow">
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> 2 Videos / Month</li>
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> Standard Voiceover</li>
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> Basic Subtitles</li>
+                    </ul>
+                    <button class="w-full py-3 rounded-xl bg-white/5 font-bold hover:bg-white/10 transition">Start Free</button>
+                </div>
+                <!-- Pro -->
+                <div class="glass-card p-8 border-2 border-purple-600/50 relative overflow-hidden scale-105 bg-purple-600/[0.03]">
+                    <div class="absolute top-0 right-0 bg-purple-600 text-[10px] font-black px-4 py-1 uppercase tracking-widest">Most Popular</div>
+                    <h3 class="text-xl font-bold mb-2">Creator</h3>
+                    <div class="text-4xl font-black mb-6">$29 <span class="text-sm font-normal text-gray-500">/mo</span></div>
+                    <ul class="space-y-4 mb-8 text-sm text-gray-200">
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> 30 Videos / Month</li>
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> Ultra-Realistic Voice Clones</li>
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> Premium Transitions</li>
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> No Watermark</li>
+                    </ul>
+                    <button class="btn-cta w-full py-3 rounded-xl font-bold">Get Pro</button>
+                </div>
+                <!-- Enterprise -->
+                <div class="glass-card p-8 border border-white/5 flex flex-col">
+                    <h3 class="text-xl font-bold mb-2">Agency</h3>
+                    <div class="text-4xl font-black mb-6">$99 <span class="text-sm font-normal text-gray-500">/mo</span></div>
+                    <ul class="space-y-4 mb-8 text-sm text-gray-400 flex-grow">
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> Unlimited Videos</li>
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> API Access</li>
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> Custom Brand Assets</li>
+                        <li><i class="fas fa-check text-purple-500 mr-2"></i> Priority Support</li>
+                    </ul>
+                    <button class="w-full py-3 rounded-xl bg-white/5 font-bold hover:bg-white/10 transition">Contact Sales</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="testimonials" class="container mx-auto px-6 py-24 bg-white/[0.01]">
+            <h2 class="text-4xl font-black text-center mb-16 uppercase">Loved by <span class="text-indigo-500">10k+ Creators</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card p-6 text-sm italic text-gray-400">
+                    "Themora literally saved my TikTok account. I went from 100 views to 1M in two weeks using the AI script generator."
+                    <div class="mt-4 flex items-center space-x-3 not-italic">
+                        <div class="w-8 h-8 bg-gray-700 rounded-full"></div>
+                        <span class="font-bold text-white">Alex Rivera</span>
+                    </div>
+                </div>
+                <div class="glass-card p-6 text-sm italic text-gray-400">
+                    "I don't even use CapCut anymore. This does everything automatically."
+                    <div class="mt-4 flex items-center space-x-3 not-italic">
+                        <div class="w-8 h-8 bg-gray-700 rounded-full"></div>
+                        <span class="font-bold text-white">Sarah J.</span>
+                    </div>
+                </div>
+                <div class="glass-card p-6 text-sm italic text-gray-400">
+                    "The voice cloning is scary good. My audience thought it was actually me speaking!"
+                    <div class="mt-4 flex items-center space-x-3 not-italic">
+                        <div class="w-8 h-8 bg-gray-700 rounded-full"></div>
+                        <span class="font-bold text-white">Marcus Lee</span>
+                    </div>
+                </div>
+                <div class="glass-card p-6 text-sm italic text-gray-400">
+                    "The best investment for my faceless YouTube channel. 10/10."
+                    <div class="mt-4 flex items-center space-x-3 not-italic">
+                        <div class="w-8 h-8 bg-gray-700 rounded-full"></div>
+                        <span class="font-bold text-white">Elena G.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- GENERATE VIDEO STUDIO -->
+    <main id="studioPage" class="page">
+        <section class="container mx-auto px-6 py-12">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center space-x-4 mb-12">
+                    <button onclick="showPage('home')" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-white/10 transition">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2 class="text-3xl font-black">Video <span class="text-purple-500">Studio</span></h2>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                    <div class="space-y-6">
+                        <div class="glass-card p-8">
+                            <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest block mb-4">What's the topic?</label>
+                            <textarea id="videoPrompt" class="w-full bg-white/5 border border-white/10 p-6 rounded-2xl h-40 text-lg focus:outline-none focus:border-purple-500 transition resize-none" placeholder="Explain how black holes work..."></textarea>
+                            <div class="mt-6 flex items-center space-x-3 text-sm font-bold text-purple-400">
+                                <i class="fas fa-bolt"></i>
+                                <span>AI will write the script & generate visuals</span>
+                            </div>
+                        </div>
+                        <button onclick="startGeneration()" id="genBtn" class="btn-cta w-full py-5 rounded-2xl font-black text-xl flex items-center justify-center space-x-3">
+                            <span>START GENERATING</span>
+                            <i class="fas fa-sparkles"></i>
+                        </button>
+                    </div>
+
+                    <div class="glass-card p-8 flex flex-col items-center justify-center min-h-[400px]">
+                        <div id="statusEmpty" class="text-center opacity-40">
+                            <i class="fas fa-play-circle text-6xl mb-4"></i>
+                            <p class="font-bold">Awaiting Input</p>
+                        </div>
+                        <div id="statusProcessing" class="hidden w-full space-y-8 text-center">
+                            <div class="loader-ring mx-auto"></div>
+                            <div class="space-y-3">
+                                <p id="progressText" class="text-lg font-black tracking-tight">Writing Viral Script...</p>
+                                <div class="h-1.5 w-full bg-white/10 rounded-full overflow-hidden max-w-[200px] mx-auto">
+                                    <div id="progressBar" class="h-full bg-purple-500 w-0 transition-all duration-500"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="statusFinished" class="hidden w-full text-center">
+                            <div class="w-full aspect-[9/16] max-w-[220px] mx-auto bg-gray-900 rounded-3xl border-4 border-white/10 relative overflow-hidden shadow-2xl">
+                                <img src="https://images.unsplash.com/photo-1620712943543-bcc4638d9f8e?q=80&w=2071&auto=format&fit=crop" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <i class="fas fa-check-circle text-5xl text-emerald-500"></i>
+                                </div>
+                            </div>
+                            <div class="mt-8 flex space-x-4 justify-center">
+                                <button class="px-6 py-3 bg-white/10 rounded-xl text-xs font-black uppercase tracking-widest hover:bg-white/20">Download</button>
+                                <button class="px-6 py-3 bg-purple-600 rounded-xl text-xs font-black uppercase tracking-widest shadow-lg">Post Story</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Detailed Footer -->
+    <footer class="bg-black py-20 border-t border-white/5">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="w-8 h-8 bg-purple-600 rounded flex items-center justify-center">
+                            <i class="fas fa-play text-white text-[10px]"></i>
+                        </div>
+                        <span class="text-xl font-black tracking-tighter">Themora</span>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed">The #1 AI platform for social media growth. Create high-quality content at the speed of thought.</p>
+                </div>
+                <div>
+                    <h4 class="font-black uppercase text-[10px] tracking-widest text-gray-500 mb-6">Product</h4>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Script Generator</a></li>
+                        <li><a href="#" class="hover:text-white transition">Voice Cloning</a></li>
+                        <li><a href="#" class="hover:text-white transition">Auto-Captions</a></li>
+                        <li><a href="#" class="hover:text-white transition">Stock Library</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-black uppercase text-[10px] tracking-widest text-gray-500 mb-6">Resources</h4>
+                    <ul class="space-y-4 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white transition">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition">Community</a></li>
+                        <li><a href="#" class="hover:text-white transition">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-black uppercase text-[10px] tracking-widest text-gray-500 mb-6">Connect</h4>
+                    <div class="flex space-x-4 text-gray-500 text-xl">
+                        <a href="#" class="hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="hover:text-white transition"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="hover:text-white transition"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[10px] font-black uppercase tracking-[0.4em] text-gray-700">
+                <p>&copy; 2024 Themora Labs Inc.</p>
+                <div class="flex space-x-8 mt-4 md:mt-0">
+                    <a href="#">Terms</a>
+                    <a href="#">Privacy</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const targetPage = document.getElementById(pageId + 'Page');
+            if(targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function startGeneration() {
+            const prompt = document.getElementById('videoPrompt').value;
+            if(!prompt) {
+                alert("Please describe your video topic first!");
+                return;
+            }
+
+            const btn = document.getElementById('genBtn');
+            const empty = document.getElementById('statusEmpty');
+            const processing = document.getElementById('statusProcessing');
+            const finished = document.getElementById('statusFinished');
+            const progress = document.getElementById('progressBar');
+            const statusLabel = document.getElementById('progressText');
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-circle-notch animate-spin"></i> CREATING...';
+            
+            empty.classList.add('hidden');
+            finished.classList.add('hidden');
+            processing.classList.remove('hidden');
+
+            const steps = [
+                { p: 30, t: "Brainstorming Script..." },
+                { p: 65, t: "Generating Voice & Music..." },
+                { p: 90, t: "Adding Dynamic Captions..." },
+                { p: 100, t: "Final Polish..." }
+            ];
+
+            let i = 0;
+            const timer = setInterval(() => {
+                if(i < steps.length) {
+                    progress.style.width = steps[i].p + "%";
+                    statusLabel.innerText = steps[i].t;
+                    i++;
+                } else {
+                    clearInterval(timer);
+                    processing.classList.add('hidden');
+                    finished.classList.remove('hidden');
+                    btn.disabled = false;
+                    btn.innerHTML = 'CREATE ANOTHER <i class="fas fa-sparkles ml-2"></i>';
+                }
+            }, 1200);
+        }
+    </script>
+</body>
+</html>

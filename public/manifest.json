@@ -1,0 +1,17 @@
+{
+  "name": "Themora Shop",
+  "short_name": "Themora",
+  "description": "Premium Digital Products — Templates, eBooks, Software, Courses",
+  "start_url": "/themora_Shop/public/",
+  "display": "standalone",
+  "background_color": "#0a0f1e",
+  "theme_color": "#6366f1",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/themora_Shop/public/assets/images/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/themora_Shop/public/assets/images/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "screenshots": [],
+  "categories": ["shopping", "productivity"],
+  "prefer_related_applications": false
+}
