@@ -30,7 +30,7 @@ COPY . .
 # Set permissions for storage
 RUN chown -R www-data:www-data storage public/assets
 
-# Expose port 80
-EXPOSE 80
+# Expose port (Railway uses PORT env var)
+EXPOSE 80 443 ${PORT}
 
 # The default command will be apache2-foreground
