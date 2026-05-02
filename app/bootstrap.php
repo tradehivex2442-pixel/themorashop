@@ -47,7 +47,9 @@ function env(string $key, string $default = ''): string
 {
     $val = getenv($key);
     if ($val !== false) return $val;
-    return $_ENV[$key] ?? $_SERVER[$key] ?? $default;
+    if (isset($_ENV[$key])) return (string)$_ENV[$key];
+    if (isset($_SERVER[$key])) return (string)$_SERVER[$key];
+    return $default;
 }
 
 loadEnv(ROOT_PATH . '/.env');
