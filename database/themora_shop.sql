@@ -1,12 +1,4 @@
 -- ============================================================
--- THEMORA SHOP v2.0 — Full Database Schema
--- MySQL 8.0+
--- ============================================================
-
-CREATE DATABASE IF NOT EXISTS themora_shop CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE themora_shop;
-
--- ============================================================
 -- USERS
 -- ============================================================
 CREATE TABLE users (

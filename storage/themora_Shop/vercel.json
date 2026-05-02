@@ -3,7 +3,7 @@
   "name": "themora-frontend",
   "builds": [
     {
-      "src": "public/*.php",
+      "src": "public/index.php",
       "use": "vercel-php@0.7.1"
     },
     {
@@ -15,10 +15,6 @@
     {
       "src": "/assets/(.*)",
       "dest": "/public/assets/$1"
-    },
-    {
-      "src": "/test_db.php",
-      "dest": "/public/test_db.php"
     },
     {
       "src": "/(.*)",

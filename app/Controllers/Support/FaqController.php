@@ -11,7 +11,7 @@ class FaqController extends Controller
     {
         $search = trim($req->get('q', ''));
         if ($search) {
-            $faqs = Database::fetchAll('SELECT * FROM faqs WHERE is_published=1 AND MATCH(question,answer) AGAINST(? IN BOOLEAN MODE) ORDER BY sort_order', [$search . '*']);
+            $faqs = Database::fetchAll('SELECT * FROM faqs WHERE is_published=1 AND (question ILIKE ? OR answer ILIKE ?) ORDER BY sort_order', ["%{$search}%", "%{$search}%"]);
         } else {
             $faqs = Database::fetchAll('SELECT * FROM faqs WHERE is_published=1 ORDER BY sort_order');
         }

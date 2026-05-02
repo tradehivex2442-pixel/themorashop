@@ -23,7 +23,7 @@ class Database
             $pass   = env('DB_PASS', '');
 
             if ($driver === 'pgsql') {
-                $dsn = "pgsql:host={$host};port={$port};dbname={$dbname}";
+                $dsn = "pgsql:host={$host};port={$port};dbname={$dbname};sslmode=require";
             } else {
                 $dsn = "mysql:host={$host};port={$port};dbname={$dbname};charset=utf8mb4";
             }

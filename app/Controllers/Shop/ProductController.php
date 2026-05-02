@@ -32,7 +32,7 @@ class ProductController extends Controller
         if ($minPrice > 0)  { $where[] = 'p.price >= ?'; $params[] = $minPrice; }
         if ($maxPrice < 9999){ $where[] = 'p.price <= ?'; $params[] = $maxPrice; }
         if ($rating > 0)    { $where[] = 'p.avg_rating >= ?'; $params[] = $rating; }
-        if ($search)        { $where[] = '(p.title LIKE ? OR p.description LIKE ?)'; $params[] = "%{$search}%"; $params[] = "%{$search}%"; }
+        if ($search)        { $where[] = '(p.title ILIKE ? OR p.description ILIKE ?)'; $params[] = "%{$search}%"; $params[] = "%{$search}%"; }
         if ($tag)           { $where[] = 'EXISTS(SELECT 1 FROM product_tags pt WHERE pt.product_id = p.id AND pt.tag = ?)'; $params[] = $tag; }
 
         $orderBy = match($sort) {
