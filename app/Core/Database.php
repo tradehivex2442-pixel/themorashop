@@ -16,7 +16,7 @@ class Database
     {
         if (self::$instance === null) {
             $driver = env('DB_DRIVER', 'mysql');
-            $host   = env('DB_HOST', 'localhost');
+            $host   = env('DB_HOST', 'CHECK_IF_CODE_UPDATED');
             $port   = env('DB_PORT', $driver === 'pgsql' ? '5432' : '3306');
             $dbname = env('DB_NAME', 'themora_shop');
             $user   = env('DB_USER', 'root');
