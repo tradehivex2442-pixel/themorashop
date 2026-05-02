@@ -1,13 +1,13 @@
 <?php
-// THEMORA SHOP — Database Configuration
+// THEMORA SHOP — Database Configuration (InfinityFree / Standard PHP)
 $isLocal = env('APP_ENV', 'production') === 'development';
 
 return [
-    'driver'   => $isLocal ? 'mysql' : env('DB_DRIVER', 'pgsql'),
-    'host'     => env('DB_HOST', $isLocal ? 'localhost' : 'db.ckmbfggrjocszdwrgaib.supabase.co'),
-    'port'     => env('DB_PORT', $isLocal ? '3306' : '5432'),
-    'database' => env('DB_NAME', $isLocal ? 'themora_shop' : 'postgres'),
-    'username' => env('DB_USER', $isLocal ? 'root' : 'postgres'),
+    'driver'   => 'mysql',
+    'host'     => env('DB_HOST', $isLocal ? 'localhost' : 'sqlXXX.infinityfree.com'),
+    'port'     => env('DB_PORT', '3306'),
+    'database' => env('DB_NAME', $isLocal ? 'themora_shop' : 'your_db_name'),
+    'username' => env('DB_USER', $isLocal ? 'root' : 'your_db_user'),
     'password' => env('DB_PASS', ''),
     'charset'  => 'utf8mb4',
     'collation'=> 'utf8mb4_unicode_ci',
