@@ -3,6 +3,13 @@
     "description": "Themora Shop Digital Product Platform",
     "type": "project",
     "require": {
-        "php": "^8.2"
+        "php": "^8.2",
+        "ext-pdo": "*",
+        "ext-pdo_pgsql": "*"
+    },
+    "extra": {
+        "heroku": {
+            "document-root": "public"
+        }
     }
 }
