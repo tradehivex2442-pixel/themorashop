@@ -1,9 +1,0 @@
-.env
-.vscode/
-*.zip
-storage/logs/
-public/uploads/
-node_modules/
-vendor/
-.DS_Store
-Thumbs.db

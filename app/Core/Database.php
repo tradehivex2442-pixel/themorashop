@@ -15,12 +15,12 @@ class Database
     public static function getInstance(): PDO
     {
         if (self::$instance === null) {
-            $driver = env('DB_DRIVER', 'mysql');
-            $host   = env('DB_HOST', 'CHECK_IF_CODE_UPDATED');
-            $port   = env('DB_PORT', $driver === 'pgsql' ? '5432' : '3306');
-            $dbname = env('DB_NAME', 'themora_shop');
-            $user   = env('DB_USER', 'root');
-            $pass   = env('DB_PASS', '');
+            $driver = config('database.driver', 'mysql');
+            $host   = config('database.host', 'localhost');
+            $port   = config('database.port', $driver === 'pgsql' ? '5432' : '3306');
+            $dbname = config('database.database', 'themora_shop');
+            $user   = config('database.username', 'root');
+            $pass   = config('database.password', '');
 
             if ($driver === 'pgsql') {
                 $dsn = "pgsql:host={$host};port={$port};dbname={$dbname};sslmode=require";

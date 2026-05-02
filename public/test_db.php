@@ -8,11 +8,11 @@ ini_set('display_errors', 1);
 
 echo "<h2>Database Connection Test</h2>";
 
-$driver = env('DB_DRIVER', 'mysql');
-$host   = env('DB_HOST', 'localhost');
-$port   = env('DB_PORT', '3306');
-$dbname = env('DB_NAME', 'themora_shop');
-$user   = env('DB_USER', 'root');
+$driver = config('database.driver', 'mysql');
+$host   = config('database.host', 'localhost');
+$port   = config('database.port', '3306');
+$dbname = config('database.database', 'themora_shop');
+$user   = config('database.username', 'root');
 
 echo "Trying to connect to: <b>$driver://$user@$host:$port/$dbname</b><br><br>";
 

@@ -46,7 +46,7 @@ if (!function_exists('config')) {
         static $loaded = [];
         [$file, $subKey] = explode('.', $key, 2) + ['', ''];
         if (!isset($loaded[$file])) {
-            $f = dirname(__DIR__) . "/Config/{$file}.php";
+            $f = dirname(__DIR__) . "/config/{$file}.php";
             $loaded[$file] = file_exists($f) ? require $f : [];
         }
         return $loaded[$file][$subKey] ?? $default;
